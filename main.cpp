@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#define COUTWIDTH std::cout.width(2);std::cout 
+
 const int ROWS = 16;
 const int COLS = 16;
 char TABLE[ROWS][COLS];
@@ -14,6 +16,7 @@ typedef struct {
     int y;
 } point_t;
 
+// vector of mine posisitions 
 std::vector<point_t> MINES;
 
 // initializes an table that is filled with x's
@@ -33,19 +36,29 @@ void print_table()
 {
     std::cout << std::endl;
 
+    // print the x axis on top 
+    std::cout << "   "; // double space to match 
     for (int i = 0; i < ROWS; i++)
     {
-        std::cout.width(2);
-        std::cout << i;
+        COUTWIDTH << i << "|";
+    }
+    std::cout << std::endl;
+
+    // print table
+    for (int i = 0; i < ROWS; i++) 
+    {
+        // std::cout.width(2);
+        COUTWIDTH << i;
         for (int j = 0; j < COLS; j++)
         {
-            std::cout << '|' << TABLE[i][j];
+            std::cout << '|';
+            COUTWIDTH << TABLE[i][j];
         }
         std::cout << '|' << std::endl;
     }
 }
 
-// chooses the areas that contain a mine 
+// chooses the areas that contains the mines 
 void initialize_mines() 
 {
     srand(time(0));
@@ -76,7 +89,14 @@ bool cord_is_mine(point_t point)
 void view_mines() 
 {
     std::cout << std::endl;
-
+    // print the x axis on top 
+    std::cout << "   "; // double space to match 
+    for (int i = 0; i < ROWS; i++)
+    {
+        COUTWIDTH << i << "|";
+    }
+    std::cout << std::endl;
+    // print table 
     for (int i = 0; i < ROWS; i++)
     {
         std::cout.width(2);
@@ -86,11 +106,13 @@ void view_mines()
             point_t cord = {.x=i,.y=j};
             if (cord_is_mine(cord))
             {
-                std::cout << '|' << 'O';
+                std::cout << '|';
+                COUTWIDTH << 'O';
             }
             else 
             {
-                std::cout << '|' << TABLE[i][j];
+                std::cout << '|';
+                COUTWIDTH << TABLE[i][j];
             }
         }
         std::cout << '|' << std::endl;
@@ -106,7 +128,7 @@ int main()
     std::string spot;
     std::cout << "choose a spot" << std::endl;
     std::cin >> spot;
-    std::cout << " you chose " << spot;
+    std::cout << " you chose " << spot << std::endl;
 
 
     return 0;
